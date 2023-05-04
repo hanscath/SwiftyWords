@@ -21,16 +21,15 @@ struct CategoriesView: View {
                     VStack(alignment: .leading) {
                         Text(category.name)
                             .font(.headline)
-                        
                         Text(category.description)
                     }
                 }
             }
+            .navigationTitle("7 Swifty Words")
             .navigationDestination(for: Category.self) {
                 category in
                 LevelsView(category: category, player: player)
             }
-            .navigationTitle("7 Swifty Words")
             ScoreView(player: player)
         }
     }
