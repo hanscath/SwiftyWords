@@ -45,8 +45,9 @@ struct ContentView: View {
                     }
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .bold(answer.isSolved)
-                    
+//                    if #available(iOS 16.0, *) {
+//                        .bold(answer.isSolved)
+//                    }
                     Spacer()
                 }
             }

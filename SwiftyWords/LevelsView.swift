@@ -13,24 +13,35 @@ struct LevelsView: View {
     @ObservedObject var player: Player
     
     var body: some View {
-        VStack {
-            List(0..<category.levels.count, id: \.self) { number in
-                NavigationLink(value: number) {
+        if #available(iOS 16.0, *) {
+            VStack {
+                List(0..<category.levels.count, id: \.self) { number in
+                    NavigationLink(value: number) {
+                        Text("Level \(number + 1)")
+                    }
+                }
+                .navigationDestination(for: Int.self) { level in
+                    ContentView(category: category, levelNumber: level, player: player)
+                }
+                .navigationTitle(category.name)
+                .navigationBarTitleDisplayMode(.inline)
+                ScoreView(player: player)
+            }
+        } else {
+            VStack {
+                List(0..<category.levels.count, id: \.self) { number in
                     Text("Level \(number + 1)")
                 }
+                .navigationTitle(category.name)
+                .navigationBarTitleDisplayMode(.inline)
+                ScoreView(player: player)
             }
-            .navigationDestination(for: Int.self) { level in
-                ContentView(category: category, levelNumber: level, player: player)
-            }
-            .navigationTitle(category.name)
-            .navigationBarTitleDisplayMode(.inline)
-            ScoreView(player: player)
         }
     }
 }
-
-struct LevelsView_Previews: PreviewProvider {
-    static var previews: some View {
-        LevelsView(category: .example, player: Player())
+    
+    struct LevelsView_Previews: PreviewProvider {
+        static var previews: some View {
+            LevelsView(category: .example, player: Player())
+        }
     }
-}

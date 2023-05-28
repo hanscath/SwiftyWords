@@ -15,22 +15,36 @@ struct CategoriesView: View {
     }
         
     var body: some View {
-        NavigationStack {
-            List(categories) { category in
-                NavigationLink(value: category) {
-                    VStack(alignment: .leading) {
-                        Text(category.name)
-                            .font(.headline)
-                        Text(category.description)
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                List(categories) { category in
+                    NavigationLink(value: category) {
+                        VStack(alignment: .leading) {
+                            Text(category.name)
+                                .font(.headline)
+                            Text(category.description)
+                        }
                     }
                 }
+                .navigationTitle("7 Swifty Words")
+                .navigationDestination(for: Category.self) {
+                    category in
+                    LevelsView(category: category, player: player)
+                }
+                ScoreView(player: player)
             }
-            .navigationTitle("7 Swifty Words")
-            .navigationDestination(for: Category.self) {
-                category in
-                LevelsView(category: category, player: player)
+        } else {
+            NavigationView {
+                List(categories) { category in
+                        VStack(alignment: .leading) {
+                            Text(category.name)
+                                .font(.headline)
+                            Text(category.description)
+                    }
+                }
+                .navigationTitle("7 Swifty Words")
+                ScoreView(player: player)
             }
-            ScoreView(player: player)
         }
     }
 }

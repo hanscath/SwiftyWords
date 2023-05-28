@@ -31,8 +31,14 @@ struct ScoreView: View {
 
 struct ScoreView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
-            ScoreView(player: Player())
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                ScoreView(player: Player())
+            }
+        } else {
+            NavigationView {
+                ScoreView(player: Player())
+            }
         }
     }
 }
