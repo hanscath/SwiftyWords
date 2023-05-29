@@ -12,6 +12,8 @@ struct ContentView: View {
     @StateObject private var model: LevelViewModel
     @ObservedObject var player: Player
 
+    @State var hint: String = ""
+    
     var category: Category
     var levelNumber: Int
     
@@ -40,7 +42,11 @@ struct ContentView: View {
                         } else {
                             Text(answer.word.hint)
                             Spacer()
-                            Image(systemName: answer.imageName)
+                            Button {
+                                 showHint(answer.word)
+                            } label: {
+                                Image(systemName: answer.imageName)
+                            }
                         }
                     }
                     .font(.title3)
@@ -90,9 +96,10 @@ struct ContentView: View {
                     let segment = model.segments[index]
                     
                     Button {
+                        hint = ""
                         model.select(index)
                     } label: {
-                        SegmentView(segment: segment)
+                        SegmentView(segment: segment, hint: $hint)
                     }
                     .buttonStyle(.plain)
                     .disabled(segment.isUsed)
@@ -104,6 +111,33 @@ struct ContentView: View {
         .confettiCannon(counter: $model.counter)
         .navigationTitle("Level \(levelNumber + 1)")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func showHint(_ word: Word) {
+        print("CurrentAnswer count: \(model.currentAnswer)")
+        print("Current word segements count: \(word.segments.count)")
+        if model.selectedSegments.isEmpty {
+            if word.segments.count >= 1 {
+                hint = word.segments[0]
+                print(word.segments[0])
+            }
+        } else if model.currentAnswer.count == 3 {
+            print("Debug: 1 segment already selected.")
+            if word.segments.count >= 2 {
+                hint = word.segments[1]
+                print(word.segments[1])
+            }
+        } else if model.currentAnswer.count == 6 {
+            print("Debug: 2 segments already selected.")
+            if word.segments.count >= 3 {
+                hint = word.segments[2]
+                print(word.segments[2])
+            }
+        } else {
+            print(model.currentAnswer)
+            print("You really need more hints?")
+        }
+        print("Hint: \(hint)")
     }
 }
 

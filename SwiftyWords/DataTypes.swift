@@ -22,7 +22,7 @@ struct Word: Hashable, Decodable {
     var hint: String
     var segments: [String]
     
-    static let example = Word(solution: "Example Solution", hint: "Example hint", segments: ["ABC", "DEF"])
+    static let example = Word(solution: "Example Solution", hint: "Example hint", segments: ["ABC", "DEF", "GHI", "JKL", "MNO"])
 }
 
 struct Answer: Identifiable {

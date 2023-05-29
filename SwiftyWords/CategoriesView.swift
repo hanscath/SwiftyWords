@@ -26,7 +26,7 @@ struct CategoriesView: View {
                         }
                     }
                 }
-                .navigationTitle("7 Swifty Words")
+                .navigationTitle("7 swiftyWords")
                 .navigationDestination(for: Category.self) {
                     category in
                     LevelsView(category: category, player: player)
@@ -42,7 +42,7 @@ struct CategoriesView: View {
                             Text(category.description)
                     }
                 }
-                .navigationTitle("7 Swifty Words")
+                .navigationTitle("7 swiftyWords")
                 ScoreView(player: player)
             }
         }

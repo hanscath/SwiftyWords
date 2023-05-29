@@ -9,6 +9,13 @@ import SwiftUI
 
 struct SegmentView: View {
     var segment: Segment
+    @Binding var hint: String
+    
+//    init(segment: Segment, hint: String) {
+//        self.segment = segment
+//        self.hint = hint
+//        print(segment)
+//    }
     
     var body: some View {
         Text(segment.text)
@@ -17,13 +24,13 @@ struct SegmentView: View {
             .frame(height: 55)
             .frame(maxWidth: .infinity)
             .foregroundColor(.white)
-            .background(.indigo)
+            .background(segment.text == hint ? .pink : .indigo)
             .cornerRadius(5)
     }
 }
 
 struct SegmentView_Previews: PreviewProvider {
     static var previews: some View {
-        SegmentView(segment: .example)
+        SegmentView(segment: .example, hint: .constant("ABC"))
     }
 }
